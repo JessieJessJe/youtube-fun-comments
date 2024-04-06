@@ -1,5 +1,7 @@
+'use client'
 import Image from "next/image";
 import styles from "./page.module.css";
+import SearchPage from "./components/SearchPage";
 
 export default function Home() {
   return (
@@ -27,6 +29,8 @@ export default function Home() {
           </a>
         </div>
       </div>
+
+      <SearchPage />
 
       <div className={styles.center}>
         <Image
