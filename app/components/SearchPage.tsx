@@ -5,10 +5,9 @@ import React, { useState, useEffect } from 'react';
 import SearchForm from './SearchForm';
 import {marked} from 'marked';
 
+// const YOUTUBE_API_KEY = process.env.REACT_APP_YOUTUBE_API_KEY.
 const YOUTUBE_API_KEY = 'AIzaSyB-c36wi20pPY5TB-i-GhTtNCzC1VWw5Ng'
-const MODEL_NAME = "gemini-1.0-pro"
 
-type FunnyComment = string;
 
 const SearchPage: React.FC = () => {
   const [youtubeUrl, setYoutubeUrl] = useState('');
@@ -27,9 +26,6 @@ const SearchPage: React.FC = () => {
 
       const funnyComments = await sendForFunninessAnalysis(youtubeComments);
 
-
-      // setComments(Array.isArray(funnyComments) ? funnyComments : [funnyComments]);
-      //setComments(Array.isArray(funnyComments) ? funnyComments.filter(comment => comment !== undefined) : []);
       setComments(funnyComments || ''); // Set empty string if funnyComments is undefined // Get top 10
     } catch (error) {
       setError('Failed to find funny comments.');
@@ -38,68 +34,6 @@ const SearchPage: React.FC = () => {
     }
   };
 
-  // const sendForFunninessAnalysis = async (comments: any) => {
-  //   const genAI = new GoogleGenerativeAI(YOUTUBE_API_KEY);
-  //   const model = genAI.getGenerativeModel({ model: MODEL_NAME });
-  //   const generationConfig = {
-  //     temperature: 0.9,
-  //     topK: 1,
-  //     topP: 1,
-  //     maxOutputTokens: 2048,
-  //   };
-  //   const safetySettings = [
-  //     {
-  //       category: HarmCategory.HARM_CATEGORY_HARASSMENT,
-  //       threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-  //     },
-  //     {
-  //       category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
-  //       threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-  //     },
-  //     {
-  //       category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
-  //       threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-  //     },
-  //     {
-  //       category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
-  //       threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-  //     },
-  //   ];
-
-  //   const chat = model.startChat({
-  //     generationConfig,
-  //     safetySettings,
-  //     history: [
-  //       {
-  //         role: "user",
-  //         parts: [{ text: "i will give you an array of comment, help me pick the most funny one"}],
-  //       },
-  //       {
-  //         role: "model",
-  //         parts: [{ text: "Sounds like fun! I'm ready to put my humor detection skills to the test. Just feed me the array of comments, and I'll do my best to pick the one that tickles my funny bone the most. \n\nRemember, humor can be subjective, so what I find funny might not be the same for everyone.  But I'll try my best to pick the one with the most comedic potential."}],
-  //       },
-  //       {
-  //         role: "user",
-  //         parts: [{ text: JSON.stringify(comments) }],
-  //       },
-  //     ],
-  //   });
-
-  //     //PREPARE commemts to gemini API
-  //     const gemini_data = comments.map((com: string) => ({
-  //       comment: com
-  //     }));
-  
-  //   const result = await chat.sendMessage(gemini_data);
-  //   const response = result.response;
-
-  //   const gemini_result = response.text();
-  //   console.log(gemini_result);
-  
-  
-  //   // console.log(comments,'comments', gemini_data)
-  //   return gemini_result; 
-  // };
 
   const sendForFunninessAnalysis = async (comments: any) => {
     console.log(comments,'comments from youtube')
@@ -231,12 +165,6 @@ const SearchPage: React.FC = () => {
       {isLoading && <p>Loading...</p>}
       {error && <p>{error}</p>}
       {comments && <div dangerouslySetInnerHTML={{ __html: comments }}></div>}
-      {/* {comments.map((comment, index) => (
-        <div>
-        <p key={index}>{comment}</p> 
-        <br></br>
-        </div>
-      ))} */}
     </div>
   );
 };
